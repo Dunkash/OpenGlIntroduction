@@ -140,6 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="pentagon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cube.h" />
@@ -147,6 +148,7 @@
     <ClInclude Include="gradient.h" />
     <ClInclude Include="helpers.h" />
     <ClInclude Include="key.h" />
+    <ClInclude Include="pentagon.h" />
     <ClInclude Include="triangle.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

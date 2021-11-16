@@ -1,0 +1,6 @@
+﻿  main.cpp
+C:\Users\Dunkash\source\repos\OpenglIntroduction\key.h(46,1): warning C4305: '+=': truncation from 'double' to 'float'
+C:\Users\Dunkash\source\repos\OpenglIntroduction\key.h(53,1): warning C4305: '-=': truncation from 'double' to 'float'
+  pentagon.cpp
+  Generating Code...
+  OpenGlIntroduction.vcxproj -> C:\Users\Dunkash\source\repos\OpenglIntroduction\x64\Debug\OpenGlIntroduction.exe

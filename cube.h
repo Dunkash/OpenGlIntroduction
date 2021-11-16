@@ -1,4 +1,5 @@
 #pragma once
+#pragma comment( lib, "OpenGL32.lib" )
 #include "figure.h"
 class cube :
     public figure
