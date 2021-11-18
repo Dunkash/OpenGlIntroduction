@@ -7,9 +7,12 @@ using namespace std;
 #include "gradient.h"
 #include "cube.h"
 #include "pentagon.h"
+#include "yellow_cube.h"
 
 int main()
 {
-	auto t = pentagon();
+	auto t = yellowcube();
 	t.Paint();
+	auto tt = pentagon();
+	tt.Paint();
 }
