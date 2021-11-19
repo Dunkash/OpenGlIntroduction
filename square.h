@@ -3,39 +3,41 @@
 class square :
     public figure
 {
-    // Переменные с индентификаторами ID
-// ID шейдерной программы
+    // РџРµСЂРµРјРµРЅРЅС‹Рµ СЃ РёРЅРґРµРЅС‚РёС„РёРєР°С‚РѕСЂР°РјРё ID
+// ID С€РµР№РґРµСЂРЅРѕР№ РїСЂРѕРіСЂР°РјРјС‹
     GLuint Program;
-    // ID атрибута
+    // ID Р°С‚СЂРёР±СѓС‚Р°
     GLint Attrib_vertex;
     // ID Vertex Buffer Object
     GLuint VBO;
-    // Вершина
+    // Р’РµСЂС€РёРЅР°
     struct Vertex
     {
         GLfloat x;
         GLfloat y;
     };
 
-    // Исходный код вершинного шейдера
+    // РСЃС…РѕРґРЅС‹Р№ РєРѕРґ РІРµСЂС€РёРЅРЅРѕРіРѕ С€РµР№РґРµСЂР°
     const char* VertexShaderSource = R"(
     #version 330 core
     in vec2 coord;
+    out vec2 vPosition;
     void main() {
+        vPosition = coord;
         gl_Position = vec4(coord, 0.0, 1.0);
     }
 )";
 
-    // Исходный код фрагментного шейдера
+    // РСЃС…РѕРґРЅС‹Р№ РєРѕРґ С„СЂР°РіРјРµРЅС‚РЅРѕРіРѕ С€РµР№РґРµСЂР°
     const char* FragShaderSource = R"(
     #version 330 core
-    in vec3 vPosition;
+    in vec2 vPosition;
     out vec4 color;
     void main() {
-        float k = 2.0;
-        int sum = int((vPosition.y - 1)* k);
-        if(sum == 0)
-            color = vec4(1, 0, 0, 1);
+        float k = 20;
+        int sum = int((vPosition.x -1)* k);
+        if(sum % 2 == 0)
+            color = vec4(1, 1, 0, 1);
         else
             color = vec4(0, 0, 1, 1);
     }
@@ -46,16 +48,16 @@ class square :
 
 
 
-    // Проверка ошибок OpenGL, если есть то вывод в консоль тип ошибки
+    // РџСЂРѕРІРµСЂРєР° РѕС€РёР±РѕРє OpenGL, РµСЃР»Рё РµСЃС‚СЊ С‚Рѕ РІС‹РІРѕРґ РІ РєРѕРЅСЃРѕР»СЊ С‚РёРї РѕС€РёР±РєРё
     void checkOpenGLerror() {
         GLenum errCode;
-        // Коды ошибок можно смотреть тут
+        // РљРѕРґС‹ РѕС€РёР±РѕРє РјРѕР¶РЅРѕ СЃРјРѕС‚СЂРµС‚СЊ С‚СѓС‚
         // https://www.khronos.org/opengl/wiki/OpenGL_Error
         if ((errCode = glGetError()) != GL_NO_ERROR)
             std::cout << "OpenGl error!: " << errCode << std::endl;
     }
 
-    // Функция печати лога шейдера
+    // Р¤СѓРЅРєС†РёСЏ РїРµС‡Р°С‚Рё Р»РѕРіР° С€РµР№РґРµСЂР°
     void ShaderLog(unsigned int shader)
     {
         int infologLen = 0;
@@ -80,7 +82,7 @@ class square :
     void InitVBO()
     {
         glGenBuffers(1, &VBO);
-        // Вершины нашего пятиугольника
+        // Р’РµСЂС€РёРЅС‹ РЅР°С€РµРіРѕ РїСЏС‚РёСѓРіРѕР»СЊРЅРёРєР°
         Vertex pentagon[4] = {
             { 0.5, 0.5 },
             { -0.5, 0.5 },
@@ -88,7 +90,7 @@ class square :
             { 0.5, -0.5},  
         };
 
-        // Передаем вершины в буфер
+        // РџРµСЂРµРґР°РµРј РІРµСЂС€РёРЅС‹ РІ Р±СѓС„РµСЂ
         glBindBuffer(GL_ARRAY_BUFFER, VBO);
         glBufferData(GL_ARRAY_BUFFER, sizeof(pentagon), pentagon, GL_STATIC_DRAW);
         checkOpenGLerror();
@@ -96,32 +98,32 @@ class square :
 
 
     void InitShader() {
-        // Создаем вершинный шейдер
+        // РЎРѕР·РґР°РµРј РІРµСЂС€РёРЅРЅС‹Р№ С€РµР№РґРµСЂ
         GLuint vShader = glCreateShader(GL_VERTEX_SHADER);
-        // Передаем исходный код
+        // РџРµСЂРµРґР°РµРј РёСЃС…РѕРґРЅС‹Р№ РєРѕРґ
         glShaderSource(vShader, 1, &VertexShaderSource, NULL);
-        // Компилируем шейдер
+        // РљРѕРјРїРёР»РёСЂСѓРµРј С€РµР№РґРµСЂ
         glCompileShader(vShader);
         std::cout << "vertex shader \n";
         ShaderLog(vShader);
 
-        // Создаем фрагментный шейдер
+        // РЎРѕР·РґР°РµРј С„СЂР°РіРјРµРЅС‚РЅС‹Р№ С€РµР№РґРµСЂ
         GLuint fShader = glCreateShader(GL_FRAGMENT_SHADER);
-        // Передаем исходный код
+        // РџРµСЂРµРґР°РµРј РёСЃС…РѕРґРЅС‹Р№ РєРѕРґ
         glShaderSource(fShader, 1, &FragShaderSource, NULL);
-        // Компилируем шейдер
+        // РљРѕРјРїРёР»РёСЂСѓРµРј С€РµР№РґРµСЂ
         glCompileShader(fShader);
         std::cout << "fragment shader \n";
         ShaderLog(fShader);
 
-        // Создаем программу и прикрепляем шейдеры к ней
+        // РЎРѕР·РґР°РµРј РїСЂРѕРіСЂР°РјРјСѓ Рё РїСЂРёРєСЂРµРїР»СЏРµРј С€РµР№РґРµСЂС‹ Рє РЅРµР№
         Program = glCreateProgram();
         glAttachShader(Program, vShader);
         glAttachShader(Program, fShader);
 
-        // Линкуем шейдерную программу
+        // Р›РёРЅРєСѓРµРј С€РµР№РґРµСЂРЅСѓСЋ РїСЂРѕРіСЂР°РјРјСѓ
         glLinkProgram(Program);
-        // Проверяем статус сборки
+        // РџСЂРѕРІРµСЂСЏРµРј СЃС‚Р°С‚СѓСЃ СЃР±РѕСЂРєРё
         int link_ok;
         glGetProgramiv(Program, GL_LINK_STATUS, &link_ok);
         if (!link_ok)
@@ -130,7 +132,7 @@ class square :
             return;
         }
 
-        // Вытягиваем ID атрибута из собранной программы
+        // Р’С‹С‚СЏРіРёРІР°РµРј ID Р°С‚СЂРёР±СѓС‚Р° РёР· СЃРѕР±СЂР°РЅРЅРѕР№ РїСЂРѕРіСЂР°РјРјС‹
         const char* attr_name = "coord";
         Attrib_vertex = glGetAttribLocation(Program, attr_name);
         if (Attrib_vertex == -1)
@@ -149,35 +151,35 @@ class square :
 
 
     void Draw() {
-        // Устанавливаем шейдерную программу текущей
+        // РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј С€РµР№РґРµСЂРЅСѓСЋ РїСЂРѕРіСЂР°РјРјСѓ С‚РµРєСѓС‰РµР№
         glUseProgram(Program);
-        // Включаем массив атрибутов
+        // Р’РєР»СЋС‡Р°РµРј РјР°СЃСЃРёРІ Р°С‚СЂРёР±СѓС‚РѕРІ
         glEnableVertexAttribArray(Attrib_vertex);
-        // Подключаем VBO
+        // РџРѕРґРєР»СЋС‡Р°РµРј VBO
         glBindBuffer(GL_ARRAY_BUFFER, VBO);
-        // Указывая pointer 0 при подключенном буфере, мы указываем что данные в VBO
+        // РЈРєР°Р·С‹РІР°СЏ pointer 0 РїСЂРё РїРѕРґРєР»СЋС‡РµРЅРЅРѕРј Р±СѓС„РµСЂРµ, РјС‹ СѓРєР°Р·С‹РІР°РµРј С‡С‚Рѕ РґР°РЅРЅС‹Рµ РІ VBO
         glVertexAttribPointer(Attrib_vertex, 2, GL_FLOAT, GL_FALSE, 0, 0);
-        // Отключаем VBO
+        // РћС‚РєР»СЋС‡Р°РµРј VBO
         glBindBuffer(GL_ARRAY_BUFFER, 0);
-        // Передаем данные на видеокарту(рисуем)
+        // РџРµСЂРµРґР°РµРј РґР°РЅРЅС‹Рµ РЅР° РІРёРґРµРѕРєР°СЂС‚Сѓ(СЂРёСЃСѓРµРј)
         glDrawArrays(GL_POLYGON, 0, 4);
-        // Отключаем массив атрибутов
+        // РћС‚РєР»СЋС‡Р°РµРј РјР°СЃСЃРёРІ Р°С‚СЂРёР±СѓС‚РѕРІ
         glDisableVertexAttribArray(Attrib_vertex);
-        // Отключаем шейдерную программу
+        // РћС‚РєР»СЋС‡Р°РµРј С€РµР№РґРµСЂРЅСѓСЋ РїСЂРѕРіСЂР°РјРјСѓ
         glUseProgram(0);
         checkOpenGLerror();
     }
 
 
-    // Освобождение шейдеров
+    // РћСЃРІРѕР±РѕР¶РґРµРЅРёРµ С€РµР№РґРµСЂРѕРІ
     void ReleaseShader() {
-        // Передавая ноль, мы отключаем шейдрную программу
+        // РџРµСЂРµРґР°РІР°СЏ РЅРѕР»СЊ, РјС‹ РѕС‚РєР»СЋС‡Р°РµРј С€РµР№РґСЂРЅСѓСЋ РїСЂРѕРіСЂР°РјРјСѓ
         glUseProgram(0);
-        // Удаляем шейдерную программу
+        // РЈРґР°Р»СЏРµРј С€РµР№РґРµСЂРЅСѓСЋ РїСЂРѕРіСЂР°РјРјСѓ
         glDeleteProgram(Program);
     }
 
-    // Освобождение буфера
+    // РћСЃРІРѕР±РѕР¶РґРµРЅРёРµ Р±СѓС„РµСЂР°
     void ReleaseVBO()
     {
         glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -196,7 +198,7 @@ public:
 
         window.setActive(true);
 
-        // Инициализация glew
+        // РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ glew
         glewInit();
 
         Init();
