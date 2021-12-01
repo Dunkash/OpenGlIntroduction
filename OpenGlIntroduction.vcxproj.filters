@@ -21,6 +21,9 @@
     <ClCompile Include="pentagon.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ellipse.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="figure.h">
@@ -42,6 +45,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="pentagon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ellipse.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

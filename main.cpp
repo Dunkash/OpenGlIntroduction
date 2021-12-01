@@ -8,11 +8,10 @@ using namespace std;
 #include "cube.h"
 #include "pentagon.h"
 #include "yellow_cube.h"
+#include "ellipse.h"
 
 int main()
 {
-	auto t = yellowcube();
+	auto t = ellipse();
 	t.Paint();
-	auto tt = pentagon();
-	tt.Paint();
 }

@@ -139,11 +139,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ellipse.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="pentagon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cube.h" />
+    <ClInclude Include="ellipse.h" />
     <ClInclude Include="figure.h" />
     <ClInclude Include="gradient.h" />
     <ClInclude Include="helpers.h" />
