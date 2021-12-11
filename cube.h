@@ -20,52 +20,82 @@ class cube :
         GLfloat z;
     };
 
+
+
     // Исходный код вершинного шейдера
     const char* VertexShaderSource = R"(
     #version 330 core
 
-    // Координаты вершины. Атрибут, инициализируется через буфер.
     in vec3 vertexPosition;
     
-    // Выходной параметр с координатами вершины, интерполируется и передётся во фрагментный шейдер 
     out vec3 vPosition;
 
     void main() {
-        // Передаём непреобразованную координату во фрагментный шейдер
         vPosition = vertexPosition;
 
-        // Захардкодим углы поворота
         float x_angle = 1;
         float y_angle = 1;
         
-        // Поворачиваем вершину
         vec3 position = vertexPosition * mat3(
             1, 0, 0,
             0, cos(x_angle), -sin(x_angle),
             0, sin(x_angle), cos(x_angle)
-        ) * mat3(
+        ) 
+        * 
+        mat3(
             cos(y_angle), 0, sin(y_angle),
             0, 1, 0,
             -sin(y_angle), 0, cos(y_angle)
         );
 
-        // Присваиваем вершину волшебной переменной gl_Position
         gl_Position = vec4(position, 1.0);
     }
 )";
 
+
+
+    
+//    // Исходный код вершинного шейдера
+//    const char* VertexShaderSource = R"(
+//    #version 330 core
+//
+//    in vec3 vertexPosition;
+//    
+//    out vec3 vPosition;
+//
+//    void main() {
+//        vPosition = vertexPosition;
+//
+//        float x_angle = 1;
+//        float y_angle = 1;
+//        
+//        vec3 position = vertexPosition * mat3(
+//            1, 0, 0,
+//            0, cos(x_angle), -sin(x_angle),
+//            0, sin(x_angle), cos(x_angle)
+//        ) 
+//        * 
+//        mat3(
+//            cos(y_angle), 0, sin(y_angle),
+//            0, 1, 0,
+//            -sin(y_angle), 0, cos(y_angle)
+//        );
+//
+//        gl_Position = vec4(1.0,1.0,1.0, 1.0);
+//    }
+//)";
+    
+
+    
     // Исходный код фрагментного шейдера
     const char* FragShaderSource = R"(
     #version 330 core
 
-    // Интерполированные координаты вершины, передаются из вершинного шейдера
     in vec3 vPosition;
 
-    // Цвет, который будем отрисовывать
     out vec4 color;
 
     void main() {
-        // Тут происходит магия, чтобы кубик выглядел красиво
         float k = 5;
         int sum = int(vPosition.x * k) + int(vPosition.y * k) + int(vPosition.z * k);
         if (sum - (sum / 2) * 2 != 0)
@@ -74,9 +104,6 @@ class cube :
             color = vec4(0.1, 0.5, 0.7, 1);
     }
 )";
-
-
-    
 
 
     // Проверка ошибок OpenGL, если есть то вывод в консоль тип ошибки
@@ -172,6 +199,7 @@ class cube :
             return;
         }
 
+        /*
         // Вытягиваем ID атрибута из собранной программы
         const char* attr_name = "vertexPosition";
         Attrib_vertex = glGetAttribLocation(Program, attr_name);
@@ -180,6 +208,7 @@ class cube :
             std::cout << "could not bind attrib " << attr_name << std::endl;
             return;
         }
+        */
 
         checkOpenGLerror();
     }

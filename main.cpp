@@ -8,10 +8,12 @@ using namespace std;
 #include "cube.h"
 #include "pentagon.h"
 #include "yellow_cube.h"
+#include "textures_color.h"
 #include "ellipse.h"
+#include "textures_double.h"
 
 int main()
 {
-	auto t = ellipse();
+	auto t = textures_color();
 	t.Paint();
 }

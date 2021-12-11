@@ -139,9 +139,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ellipse.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="pentagon.cpp" />
+    <ClCompile Include="textures_double.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cube.h" />
@@ -151,6 +150,8 @@
     <ClInclude Include="helpers.h" />
     <ClInclude Include="key.h" />
     <ClInclude Include="pentagon.h" />
+    <ClInclude Include="textures_color.h" />
+    <ClInclude Include="textures_double.h" />
     <ClInclude Include="triangle.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -18,10 +18,7 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="pentagon.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ellipse.cpp">
+    <ClCompile Include="textures_double.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -48,6 +45,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ellipse.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="textures_color.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="textures_double.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
