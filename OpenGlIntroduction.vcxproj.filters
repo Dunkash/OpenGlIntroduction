@@ -53,5 +53,14 @@
     <ClInclude Include="textures_double.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="lighting_Phong.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tetrahedron.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gradient_cube.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

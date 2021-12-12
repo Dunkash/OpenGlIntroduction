@@ -11,9 +11,10 @@ using namespace std;
 #include "textures_color.h"
 #include "ellipse.h"
 #include "textures_double.h"
+#include "lighting_Phong.h"
 
 int main()
 {
-	auto t = textures_color();
+	auto t = lighting_Phong();//textures_double();//textures_color();
 	t.Paint();
 }
