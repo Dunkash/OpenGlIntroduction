@@ -8,13 +8,17 @@ using namespace std;
 #include "cube.h"
 #include "pentagon.h"
 #include "yellow_cube.h"
-#include "textures_color.h"
+#include "textures_file.h"
 #include "ellipse.h"
 #include "textures_double.h"
-#include "lighting_Phong.h"
+#include "lighting_file.h"
+#include "figure_model.h"
 
 int main()
 {
-	auto t = lighting_Phong();//textures_double();//textures_color();
+	//auto f = figure_model("model.obj");
+	//auto v = f.get_vertices();
+	auto t =lighting_file();
+	t.init("sphere.obj");
 	t.Paint();
 }
