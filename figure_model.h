@@ -50,43 +50,48 @@ public:
         {
             auto arr = split(str, " ");
             if (arr.size() < 3) continue;;
-            if(arr[0]=="v")
+            if (arr[0] == "v")
             {
                 vertices.push_back({ std::stof(arr[1]), std::stof(arr[2]), std::stof(arr[3]) });
-            } else if(arr[0]=="vt")
+            }
+            else if (arr[0] == "vt")
             {
                 texture.push_back({ std::stof(arr[1]), std::stof(arr[2]),  0 });
             }
-        	else if(arr[0]=="vn")
+            else if (arr[0] == "vn")
             {
                 normals.push_back({ std::stof(arr[1]), std::stof(arr[2]), std::stof(arr[3]) });
             }
-        	else if(arr[0]=="f")
+            else if (arr[0] == "f")
             {
                 auto v = std::vector<vertex_data>();
-                for(int i=1;i<4;i++)
+                for (int i = 1; i < 4; i++)
                 {
                     auto s = split(arr[i], "/");
                     v.push_back({ std::stoi(s[0]) - 1, std::stoi(s[1]) - 1,std::stoi(s[2]) - 1 });
                 }
                 faces.push_back(v);
-               
+
             }
         }
     }
 
-    std::tuple<figure::Vertex*, int> get_vertices() const
+    std::tuple<std::vector<std::vector<float>>, int> get_vertices() const
     {
         auto fsize = faces[0].size();
-        auto res = new figure::Vertex[faces.size() * fsize];
-		for(int i=0;i<faces.size();i++)
-		{
-			for(int j=0;j<fsize;j++)
-			{
-                res[fsize * i + j] = vertices[faces[i][j].vertex_index];
-			}
-		}
-        return { res, fsize*faces.size()*sizeof(figure::Vertex) };
+        // auto res = new figure::Vertex[];
+        auto res = std::vector<std::vector<float>>(faces.size() * fsize);
+        for (int i = 0; i < faces.size(); i++)
+        {
+            for (int j = 0; j < fsize; j++)
+            {
+                auto x = vertices[faces[i][j].vertex_index].x;
+                auto y = vertices[faces[i][j].vertex_index].y;
+                auto z = vertices[faces[i][j].vertex_index].z;
+                res[fsize * i + j] = { x,y,z };
+            }
+        }
+        return { res, fsize * faces.size() * sizeof(figure::Vertex) };
     }
 
     std::tuple<figure::Vertex*, int>  get_texture() const
@@ -103,17 +108,43 @@ public:
         return { res, fsize * faces.size() * sizeof(figure::Vertex) };
     }
 
-    std::tuple<float**, int>  get_normals() const
+    std::tuple<std::vector<std::vector<float>>, int>  get_normals() const
     {
-        auto res = new float*[faces.size()];
+        auto res = std::vector<std::vector<float>>(faces.size() * 3);
+        int j = 0;
         for (int i = 0; i < faces.size(); i++)
         {
-            res[i] = new float[3];
-            for (int j = 0; j < 3; j++)
-            {
-                res[i][j] = normals[faces[i][j].normal_index][j];
-            }
+            auto face = faces[i];
+            auto v1 = faces[i][0];
+            auto v2 = faces[i][1];
+            auto v3 = faces[i][2];
+            auto n1 = normals[v1.normal_index];
+            auto n2 = normals[v2.normal_index];
+            auto n3 = normals[v3.normal_index];
+            res[j] = n1;
+            res[j + 1] = n2;
+            res[j + 2] = n3;
+            j += 3;
         }
         return { res,  faces.size() * 3 * sizeof(float) };
+    }
+
+    std::vector<float> get_vert_and_normals()
+    {
+        auto verts = std::get<0>(get_vertices());
+        auto normals = std::get<0>(get_normals());
+        std::vector<float> res;
+        for (int i = 0; i < normals.size(); i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                res.push_back(verts[i][j]);
+            }
+            for (int j = 0; j < 3; j++)
+            {
+                res.push_back(normals[i][j]);
+            }
+        }
+        return res;
     }
 };

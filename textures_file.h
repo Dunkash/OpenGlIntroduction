@@ -181,7 +181,7 @@ class textures_file :
         */
         // Передаем вершины в буфер
         glBindBuffer(GL_ARRAY_BUFFER, VBO);
-        glBufferData(GL_ARRAY_BUFFER, std::get<1>(triangle), std::get<0>(triangle), GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, std::get<1>(triangle), std::get<0>(triangle).data(), GL_STATIC_DRAW);
         glBindBuffer(GL_ARRAY_BUFFER, textureVBO);
         glBufferData(GL_ARRAY_BUFFER, std::get<1>(texture), std::get<0>(texture), GL_STATIC_DRAW);
         glBindBuffer(GL_ARRAY_BUFFER, colorsVBO);

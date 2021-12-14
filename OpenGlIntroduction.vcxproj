@@ -150,11 +150,12 @@
     <ClInclude Include="gradient_cube.h" />
     <ClInclude Include="helpers.h" />
     <ClInclude Include="key.h" />
-    <ClInclude Include="lighting_Phong.h" />
+    <ClInclude Include="lighting.h" />
     <ClInclude Include="pentagon.h" />
     <ClInclude Include="tetrahedron.h" />
     <ClInclude Include="textures_color.h" />
     <ClInclude Include="textures_double.h" />
+    <ClInclude Include="textures_file.h" />
     <ClInclude Include="triangle.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
