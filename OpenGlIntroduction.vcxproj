@@ -150,7 +150,9 @@
     <ClInclude Include="gradient_cube.h" />
     <ClInclude Include="helpers.h" />
     <ClInclude Include="key.h" />
-    <ClInclude Include="lighting.h" />
+    <ClInclude Include="lighting_file.h" />
+    <ClInclude Include="lighting_Minnaert.h" />
+    <ClInclude Include="lighting_Toon.h" />
     <ClInclude Include="pentagon.h" />
     <ClInclude Include="tetrahedron.h" />
     <ClInclude Include="textures_color.h" />

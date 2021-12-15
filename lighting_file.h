@@ -7,6 +7,7 @@
 #include <sstream>
 #include <string>
 #define TO_STRING(x) #x
+
 class lighting_file :
     public figure
 {
@@ -86,7 +87,7 @@ class lighting_file :
         float emission[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
         float diffuse[4] = { 0.61424f,0.04136f, 0.04136f, 1.0f };
         float specular[4] = { 0.727811f, 0.626959f, 0.626959f, 1.0f };
-        float shininess = 0.6f;
+        float shininess = 0.128f;
     } material;
 
     struct PointLight
@@ -160,6 +161,7 @@ class lighting_file :
     }
 )";
 
+
     // Исходный код фрагментного шейдера
     const char* FragShaderSource = R"(
     #version 330 core
@@ -193,7 +195,7 @@ class lighting_file :
     void main() {
 
 		  //Phong-Blinn
-       /* vec3 normal = normalize(Vert.normal);
+        vec3 normal = normalize(Vert.normal);
 	    vec3 lightDir = normalize(Vert.lightDir);
 	    vec3 viewDir = normalize(Vert.viewDir);
         float attenuation = 1.0/(light.attenuation[0] + light.attenuation[1] * Vert.distance + light.attenuation[2] * Vert.distance * Vert.distance); 	
@@ -202,28 +204,7 @@ class lighting_file :
         float Ndot = max(dot(normal,lightDir),0.0);
         color += material.diffuse * light.diffuse * Ndot* attenuation;
         float RdotVpow = max(pow(dot(reflect (-lightDir, normal), viewDir), material.shininess),0.0);
-        color += material.specular * light.specular * RdotVpow * attenuation;*/
-
-       //Toon shading
-       vec3 normal = normalize(Vert.normal);
-	   vec3 lightDir = normalize(Vert.lightDir);
-	   float diff = 0.2 + max(dot(normal, lightDir), 0.0);
-       if(diff < 0.4)
-        color = material.diffuse * 0.3;
-       else if(diff < 0.7)
-        color = material.diffuse;
-       else
-        color = material.diffuse * 1.3;
-
-   //Minnaert
-    
-    /*const float k = 0.8;
-    vec3  n2 = normalize (Vert.normal);
-    vec3  l2 = normalize (Vert.lightDir);
-    vec3  v2 = normalize (Vert.viewDir);
-    float d1 = pow(max(dot(n2, l2), 0.0), 1.0 + k);
-    float d2 = pow(1.0 - dot(n2, v2), 1.0 - k);
-    color = material.diffuse * d1 * d2;*/
+        color += material.specular * light.specular * RdotVpow * attenuation;
     }
 )";
 

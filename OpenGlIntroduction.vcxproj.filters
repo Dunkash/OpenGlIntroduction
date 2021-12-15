@@ -59,10 +59,16 @@
     <ClInclude Include="gradient_cube.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="lighting.h">
+    <ClInclude Include="textures_file.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="textures_file.h">
+    <ClInclude Include="lighting_file.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lighting_Toon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lighting_Minnaert.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
