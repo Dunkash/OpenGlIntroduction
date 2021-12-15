@@ -76,6 +76,20 @@ public:
         }
     }
 
+    std::tuple<figure::Vertex*, int> get_vertices_struct() const
+    {
+        auto fsize = faces[0].size();
+        auto res = new figure::Vertex[faces.size() * fsize];
+        for (int i = 0; i < faces.size(); i++)
+        {
+            for (int j = 0; j < fsize; j++)
+            {
+                res[fsize * i + j] = vertices[faces[i][j].vertex_index];
+            }
+        }
+        return { res, fsize * faces.size() * sizeof(figure::Vertex) };
+    }
+
     std::tuple<std::vector<std::vector<float>>, int> get_vertices() const
     {
         auto fsize = faces[0].size();
